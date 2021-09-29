@@ -23,7 +23,33 @@ import { NotImplementedError } from '../extensions/index.js';
  *  [1, 1, 1]
  * ]
  */
-export default function minesweeper (/* matrix */) {
-  throw new NotImplementedError('Not implemented');
-  // remove line with error and write your code here
+export default function minesweeper (matrix) {
+    let minefield = JSON.parse(JSON.stringify(matrix));
+
+    for (let row of minefield) {
+        minefield[row] = row.fill(0);
+    };
+
+    for (let i = 0; i < matrix.length; i++) {
+        for (let j = 0; j < matrix[i].length; j++) {
+
+            if (matrix[i][j]) {
+                if (!(typeof matrix[i - 1] === "undefined")) {
+                    if (!(typeof matrix[i - 1][j - 1] === "undefined")) {minefield[i - 1][j - 1]++};
+                    if (!(typeof matrix[i - 1][j] === "undefined")) {minefield[i - 1][j]++};
+                    if (!(typeof matrix[i - 1][j + 1] === "undefined")) {minefield[i - 1][j + 1]++};
+                };
+
+                if (!(typeof matrix[i][j - 1] === "undefined")) {minefield[i][j - 1]++};
+                if (!(typeof matrix[i][j + 1] === "undefined")) {minefield[i][j + 1]++};
+
+                if (!(typeof matrix[i + 1] === "undefined")) {
+                    if (!(typeof matrix[i + 1][j - 1] === "undefined")) {minefield[i + 1][j - 1]++};
+                    if (!(typeof matrix[i + 1][j] === "undefined")) {minefield[i + 1][j]++};
+                    if (!(typeof matrix[i + 1][j + 1] === "undefined")) {minefield[i + 1][j + 1]++};
+                };
+            };
+        };
+    };
+    return minefield
 }
